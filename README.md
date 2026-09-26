@@ -1,1 +1,111 @@
-# seam-test-WO
+# Seam Test WO
+
+Team repository for the Seam AMS Issues module v3 expansion.
+
+This repo contains **only the files we modify** — not the full Seam source
+code.
+
+## How it works
+
+```
+seam-test-WO/          ← this repo
+├── merge.sh                  ← script that overlays our changes with the Seam Source Code 
+├── src/modified/             ← files we patch (mirror Seam's directory structure)
+│   └── internal/ui/test.go
+├── src/new/                  ← files we create from scratch
+└── patches/                  ← .patch files for shared files (e.g. i18n)
+```
+
+## Setup
+
+### Prerequisites
+
+- Go 1.26.5+
+- The Seam Source Code
+
+### Step 1: Clone this repo
+
+```bash
+git clone https://github.com/AlanMachado-dev/seam-test-WO.git
+cd seam-test-WO
+```
+
+### Step 2: Get the Seam Source Code zip
+
+### Step 3: Run the merge
+
+```bash
+./merge.sh seam.zip /tmp/seam-dev
+```
+
+This creates a fully buildable Seam project at `/tmp/seam-dev/`
+with our changes applied on top.
+
+### Step 4: Build and run
+
+```bash
+cd /tmp/seam-dev
+```
+### Build seam
+```
+go build -o /tmp/seam-bin ./cmd/seam
+```
+
+### Build xolu with the xolu.zip or clone it from github.com/ha1tch/xolu
+```
+go build -o /tmp/xolu-bin ./cmd/xolu
+```
+
+### Terminal 1: Start xolu
+```
+/tmp/xolu-bin --port 9090 --base-dir /tmp/xolu-data
+```
+
+### Terminal 2: Copy config and start seam
+```
+cp config.example.json config.json
+/tmp/seam-bin serve
+```
+
+### Step 5 (Optional): Seed demo data
+
+```bash
+cd /tmp/seam-dev
+python3 seeds/seed-01-constructec.py --url http://localhost:9090
+```
+
+Xolu: http://localhost:9090
+
+Seam: http://localhost:8080
+
+### Step 6 (Optional): Build a demo package
+
+```
+cd /tmp/seam-dev
+```
+```
+make demo
+```
+Generates a self-contained ZIP with binaries, pre-loaded database, and
+a START.sh launcher. Target machine needs zero dependencies.
+
+
+### ON WINDOWS WITH WSL UBUNTU
+
+```
+sed -i -e 's/\r$//' merge.sh
+```
+```
+./merge.sh seam-v0.4.0-2026-08-18.zip ./tmp
+```
+```
+cd ./tmp
+```
+```
+make launch
+```
+
+
+
+
+

@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "title": "New test",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title",
+      "x-seam-input": "text",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "description": {
+      "type": "string",
+      "title": "Description",
+      "x-seam-input": "textarea"
+    }
+  },
+  "required": ["title"]
+}
